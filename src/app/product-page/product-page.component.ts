@@ -66,7 +66,11 @@ export class ProductPageComponent {
     }),
   ];
 
+  protected onEdit(product: Product): void {
+    this.router.navigate(['product', 'form', product.id]);
+  }
+
   protected onView(product: Product): void {
-    this.router.navigate(['product', product.id]);
+    this.router.navigate(['product', 'view', product.id]);
   }
 }
