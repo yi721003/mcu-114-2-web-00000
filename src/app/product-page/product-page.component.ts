@@ -43,8 +43,7 @@ export class ProductPageComponent {
       createDate: new Date('2025/4/9'),
       price: 10000,
     });
-    this.productService.add(product);
-    this.getProducts(this.pageIndex(), this.pageSize());
+    this.productService.add(product).subscribe(() => this.getProducts(this.pageIndex(), this.pageSize()));
   }
 
   protected onEdit(product: Product): void {
@@ -52,9 +51,10 @@ export class ProductPageComponent {
   }
 
   protected onRemove({ id }: Product): void {
-    this.productService.remove(id);
-    this.pageIndex.set(1);
-    this.getProducts(this.pageIndex(), this.pageSize());
+    this.productService.remove(id).subscribe(() => {
+      this.pageIndex.set(1);
+      this.getProducts(this.pageIndex(), this.pageSize());
+    });
   }
 
   protected onView(product: Product): void {
