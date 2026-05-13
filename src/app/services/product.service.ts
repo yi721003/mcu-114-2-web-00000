@@ -9,7 +9,7 @@ import { Product } from '../model/product';
 export class ProductService {
   private _data: Product[] = [
     new Product({
-      id: 1,
+      id: '1',
       name: '書籍 A',
       authors: ['作者甲', '作者乙', '作者丙'],
       company: '博碩文化',
@@ -19,7 +19,7 @@ export class ProductService {
       price: 10000,
     }),
     new Product({
-      id: 2,
+      id: '2',
       name: '書籍 B',
       authors: ['作者甲', '作者乙', '作者丙'],
       company: '博碩文化',
@@ -29,7 +29,7 @@ export class ProductService {
       price: 10000,
     }),
     new Product({
-      id: 3,
+      id: '3',
       name: '書籍 C',
       authors: ['作者甲', '作者乙', '作者丙'],
       company: '博碩文化',
@@ -39,7 +39,7 @@ export class ProductService {
       price: 10000,
     }),
     new Product({
-      id: 4,
+      id: '4',
       name: '書籍 D',
       authors: ['作者甲', '作者乙', '作者丙'],
       company: '博碩文化',
@@ -49,7 +49,7 @@ export class ProductService {
       price: 10000,
     }),
     new Product({
-      id: 5,
+      id: '5',
       name: '書籍 E',
       authors: ['作者甲', '作者乙', '作者丙'],
       company: '博碩文化',
@@ -60,7 +60,7 @@ export class ProductService {
     }),
   ];
 
-  getById(productId: number): Observable<Product> {
+  getById(productId: string): Observable<Product> {
     return of(this._data).pipe(
       mergeMap((data) => data),
       filter(({ id }) => id === productId)
@@ -82,13 +82,13 @@ export class ProductService {
   }
 
   add(product: Readonly<Product>): Observable<Product> {
-    const id = this._data.length === 0 ? 1 : Math.max(...this._data.map(({ id }) => id)) + 1;
-    const newProduct = new Product({ ...product, id });
+    const id = this._data.length === 0 ? 1 : Math.max(...this._data.map(({ id }) => +id)) + 1;
+    const newProduct = new Product({ ...product, id: id.toString() });
     this._data.push(newProduct);
     return of(newProduct);
   }
 
-  remove(productId: number): Observable<Product> {
+  remove(productId: string): Observable<Product> {
     const index = this._data.findIndex(({ id }) => id === productId);
     const [product] = this._data.splice(index, 1);
     return of(product);
